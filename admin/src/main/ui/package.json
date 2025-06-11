@@ -1,0 +1,48 @@
+{
+  "name": "ui",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.10",
+    "@mui/material": "^5.15.10",
+    "@mui/utils": "^7.1.1",
+    "@react-admin/ra-audit-log": "^6.0.0",
+    "@react-admin/ra-navigation": "^5.2.0",
+    "@react-admin/ra-rbac": "^5.0.2",
+    "axios": "^1.7.8",
+    "react": "^18.3.1",
+    "react-admin": "^5.5.3",
+    "react-dom": "^18.2.0",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^7.6.2",
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "REACT_APP_API_HOST=http://localhost:12000 react-scripts start --openssl-legacy-provider",
+    "build:dev": "REACT_APP_PROFILE=dev react-scripts build",
+    "build:prod": "REACT_APP_PROFILE=prod react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://localhost:12000"
+}
