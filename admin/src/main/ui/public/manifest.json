@@ -1,0 +1,15 @@
+{
+  "short_name": "Gift Admin",
+  "name": "Gift Admin Dashboard",
+  "icons": [
+    {
+      "src": "square_symbol.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff"
+}
