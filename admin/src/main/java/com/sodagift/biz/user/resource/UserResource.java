@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth/user")
+@RequestMapping("/biz/auth/user")
 public class UserResource {
 
     @GetMapping
     public UserOnlyForLogin getUser(@AuthenticationPrincipal BizAdminOAuth2User user) {
-        return new UserOnlyForLogin("test");
+        return new UserOnlyForLogin(user.getName());
     }
 }

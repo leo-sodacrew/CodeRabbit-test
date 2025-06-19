@@ -1,0 +1,55 @@
+logging:
+  level:
+    root: info
+    org.springframework: warn
+    io.awspring: warn
+    com.amazonaws: warn
+    org.hibernate: warn
+    org.apache: warn
+    com.zaxxer: warn
+    jdk.event.security: warn
+    io.netty: warn
+    reactor.netty: warn
+    net.sf: warn
+    com.netflix: warn
+    javax.xml.bind: warn
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: local-logging
+
+logging:
+  level:
+    root: debug
+    org.flywaydb: info
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev-logging
+
+logging:
+  level:
+    root: info
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod-logging
+
+logging:
+  level:
+    root: info
+
+feign:
+  client:
+    config:
+      default:
+        logger-level: basic

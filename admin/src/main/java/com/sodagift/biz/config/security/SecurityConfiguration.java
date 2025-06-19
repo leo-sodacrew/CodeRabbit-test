@@ -8,17 +8,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-@RestController
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final OAuth2Service oAuth2Service;
+
     @Value("${app.front-url}")
     private String redirectHost;
 
@@ -29,25 +28,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .headers(headersConfigurer -> headersConfigurer.frameOptions().disable())
                 .authorizeRequests(requests -> requests
                         .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .antMatchers(HttpMethod.GET, "/management/health", "/doc", "/oauth2/**", "/").permitAll()
-                        .antMatchers(HttpMethod.GET, "/auth/user").permitAll()
-                        .antMatchers(HttpMethod.GET, "/biz/kyc").permitAll()
+                        .antMatchers(HttpMethod.GET, "/biz/**").permitAll()
                         .antMatchers("/static/**", "/favicon.ico", "/manifest.json").permitAll()
                         .anyRequest().authenticated())
                 .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/")
                         .loginProcessingUrl("/auth/oauth2/login/**")
                         .userInfoEndpoint(userInfo -> userInfo.userService(oAuth2Service))
                         .defaultSuccessUrl(redirectHost + "/login-success")
                         .failureUrl(redirectHost + "/login")
-                );
+                )
+                .logout(logout ->
+                        logout
+                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                                .invalidateHttpSession(true)
+                                .logoutSuccessHandler((req, resp, auth) -> resp.setStatus(200)));
     }
 
     @Bean

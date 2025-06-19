@@ -1,9 +1,9 @@
 {
-  "short_name": "Gift Admin",
-  "name": "Gift Admin Dashboard",
+  "short_name": "[SodaGift For Biz] Admin",
+  "name": "[SodaGift For Biz Admin] Dashboard",
   "icons": [
     {
-      "src": "square_symbol.svg",
+      "src": "https://media.sodagift.com/img/biz/sodagift-for-biz-favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml"
     }

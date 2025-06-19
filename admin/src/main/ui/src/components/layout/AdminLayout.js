@@ -1,16 +1,14 @@
-import {AppLocationContext, Breadcrumb, SolarLayout} from '@react-admin/ra-navigation';
+import {Layout} from 'react-admin';
 import React from 'react';
 import AdminMenu from './AdminMenu';
 
 const AdminLayout = ({children}) => (
-    <AppLocationContext>
-      <SolarLayout
-          menu={AdminMenu}
-      >
-        <Breadcrumb/>
-        {children}
-      </SolarLayout>
-    </AppLocationContext>
+    <Layout
+        menu={AdminMenu}
+        appBarAlwaysOn
+    >
+      {children}
+    </Layout>
 );
 
 export default AdminLayout;

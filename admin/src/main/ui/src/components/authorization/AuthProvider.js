@@ -16,7 +16,7 @@ const AuthProvider = (axios) => {
 
     checkError: (error) => {
       if (error.status !== 401 && error.status !== 403) {
-        return Promise.reject();
+        return Promise.resolve();
       }
 
       const currentPage = window.location.pathname;
@@ -28,7 +28,7 @@ const AuthProvider = (axios) => {
 
     getIdentity: async () => {
       try {
-        const response = await axios.get("/auth/user");
+        const response = await axios.get("/biz/auth/user");
         return response.data;
       } catch (error) {
         throw error;

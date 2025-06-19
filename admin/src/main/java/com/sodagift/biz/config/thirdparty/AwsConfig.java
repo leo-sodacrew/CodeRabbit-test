@@ -1,7 +1,8 @@
-package com.sodagift.biz.config;
+package com.sodagift.biz.config.thirdparty;
 
 import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sqs.AmazonSQSAsync;
+import com.sodagift.biz.thirdparty.aws.s3.AwsS3Service;
 import io.awspring.cloud.core.env.ResourceIdResolver;
 import io.awspring.cloud.messaging.config.QueueMessageHandlerFactory;
 import io.awspring.cloud.messaging.core.NotificationMessagingTemplate;
@@ -45,5 +46,10 @@ public class AwsConfig {
     @ConfigurationProperties(prefix = "aws.s3")
     public AwsS3Properties awsS3Properties() {
         return new AwsS3Properties();
+    }
+
+    @Bean
+    public AwsS3Service awsS3Service() {
+        return new AwsS3Service(awsS3Properties());
     }
 }

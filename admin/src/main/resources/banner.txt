@@ -1,0 +1,6 @@
+  ${AnsiColor.GREEN} ____   __  ____   __   ${AnsiColor.RED}  ____  __  ____
+  ${AnsiColor.GREEN}/ ___) /  \(    \ / _\  ${AnsiColor.RED} (  _ \(  )(__  )
+  ${AnsiColor.GREEN}\___ \(  O )) D (/    \ ${AnsiColor.RED}  ) _ ( )(  / _/
+  ${AnsiColor.GREEN}(____/ \__/(____/\_/\_/ ${AnsiColor.RED} (____/(__)(____)
+
+${AnsiColor.CYAN}:: Soda Biz 🤓  :: Running Spring Boot ${spring-boot.version} ::
