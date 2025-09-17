@@ -3,6 +3,7 @@ name: PR Auto Comment (@codex review)
 on:
   pull_request:
     types: [opened, reopened, ready_for_review]
+    branches: [ development ]
 
 permissions:
   pull-requests: write
