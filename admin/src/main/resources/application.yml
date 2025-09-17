@@ -1,0 +1,71 @@
+spring:
+  profiles:
+    active: local
+    include: [ aws, datasource, sodagift, thirdparty, logging, security ]
+    group:
+      local: [ local-aws, local-mysql, local-sodagift, dev-thirdparty, local-logging, local-security, local-redis ]
+      dev: [ dev-aws, dev-mysql, dev-sodagift, dev-thirdparty, dev-logging, dev-security, dev-redis ]
+      prod: [ prod-aws, prod-mysql, prod-sodagift, prod-thirdparty, prod-logging, prod-security, prod-redis ]
+  freemarker:
+    cache: true
+    suffix: .html
+
+management:
+  endpoints:
+    web:
+      base-path: /management
+      exposure:
+        include: 'health'
+
+info:
+  app:
+    profile: ${spring.profiles.active}
+    uri: ${app.base-url}
+  environment:
+    os: ${os.name}
+    timezone: ${user.timezone}
+    country: ${user.country}
+    language: ${user.language}
+
+feign:
+  circuitbreaker:
+    enabled: true
+  client:
+    config:
+      default:
+        logger-level: full
+---
+
+spring:
+  config:
+    activate:
+      on-profile: local
+server:
+  port: 12000
+app:
+  base-url: http://localhost:12000
+  front-url: http://localhost:3000
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+server:
+  port: 5000
+app:
+  base-url: https://biz-admin-dev.sodagift.com/
+  front-url: ${app.base-url}
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+server:
+  port: 5000
+app:
+  base-url: http://localhost:12000 # todo: update to actual base URL in production environment
+  front-url: http://localhost:3000

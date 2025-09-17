@@ -10,7 +10,7 @@ import com.amazonaws.services.s3.model.GroupGrantee;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.Permission;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.sodagift.biz.config.AwsS3Properties;
+import com.sodagift.biz.config.thirdparty.AwsS3Properties;
 import java.io.InputStream;
 import java.util.UUID;
 import org.springframework.context.annotation.Profile;
