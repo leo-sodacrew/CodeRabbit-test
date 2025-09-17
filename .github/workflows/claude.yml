@@ -1,7 +1,7 @@
 name: Claude Auto Review
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [ opened, synchronize ]
     branches: [ development ]
 
 jobs:
@@ -19,21 +19,38 @@ jobs:
       - uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           prompt: |
             REPO: ${{ github.repository }}
             PR NUMBER: ${{ github.event.pull_request.number }}
 
-            Please review this pull request with a focus on:
-            - Code quality and best practices
-            - Potential bugs or issues
-            - Security implications
-            - Performance considerations
+            Conduct an efficient PR review focusing on critical issues only:
+            1. Major bugs or logic errors  
+            2. Performance bottlenecks
+            3. Code quality violations
 
-            Note: The PR branch is already checked out in the current working directory.
+            WORKFLOW:
+            1. Get PR diff with `gh pr diff ${{ github.event.pull_request.number }} --name-only` to see changed files
+            2. Get full diff with `gh pr diff ${{ github.event.pull_request.number }}` for detailed review
+            3. For each critical issue found, use `mcp__github_inline_comment__create_inline_comment`
+            4. Post single summary comment with `gh pr comment` including token usage info
 
-            Use `gh pr comment` for top-level feedback.
-            Use `mcp__github_inline_comment__create_inline_comment` to highlight specific code issues.
-            Only post GitHub comments - don't submit review text as messages.
+            FINAL COMMENT FORMAT:
+            Include at the end of your summary comment:
+            
+            ---
+            **Review Stats:**
+            - Turns used: [actual turns used]
+            - Input tokens: [from usage stats]
+            - Output tokens: [from usage stats]  
+            - Total cost: $[cost from usage stats]
+
+            CONSTRAINTS:
+            - Skip todo tracking and progress updates
+            - Focus on actionable feedback only
+            - Maximum 1 summary comment + inline comments for specific issues
+            - Do not explain your review process in messages
 
           claude_args: |
-            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*)"
+            --max-turns 10
+            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(git show:*),Bash(git log:*)"
