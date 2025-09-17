@@ -2,7 +2,6 @@ name: Claude Auto Review
 on:
   pull_request:
     types: [ opened, synchronize ]
-    branches: [ development ]
 
 jobs:
   review:
